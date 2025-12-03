@@ -33,19 +33,14 @@ def part_1(banks) -> int:
 
 def find_highest(bank, to_find):
     split_pos = to_find - 1
+    find_high_in_bank = bank[:-split_pos]
 
     # Is this how I would want to do it? No. Does it work? Yes
     if not split_pos:
         find_high_in_bank = bank
-        high, high_idx = 0, 0
-        for idx, battery in enumerate(find_high_in_bank):
-            if int(battery) > high:
-                high, high_idx = int(battery), idx
-        return str(high)
 
     # figure out the highest number, excluding the last 11
     # this will be our starting point
-    find_high_in_bank = bank[:-split_pos]
     high, high_idx = 0, 0
     for idx, battery in enumerate(find_high_in_bank):
         if int(battery) > high:
@@ -53,6 +48,9 @@ def find_highest(bank, to_find):
 
     # remove everything before and including the highest number
     bank = bank[high_idx + 1 :]
+
+    if not split_pos:
+        return str(high)
 
     return str(high) + find_highest(bank, to_find - 1)
 
@@ -64,6 +62,7 @@ def part_2(banks):
         res = find_highest(bank, 12)
         total += int(res)
 
+    assert int(total) == 175659236361660
     return total
 
 
