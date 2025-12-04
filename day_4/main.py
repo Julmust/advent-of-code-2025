@@ -10,7 +10,7 @@ from utils.read_input import read_input_file
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 
-def part1(inp) -> int:
+def part1(inp, is_part_2=False) -> int:
     cnt = 0
     idx_x, idx_y = 1, 1  # Start at 1,1 since the array is padded
     height, width = len(inp), len(inp[0])
@@ -39,10 +39,22 @@ def part1(inp) -> int:
 
         if tst["@"] <= 4:
             cnt += 1
+            if is_part_2:
+                inp[idx_y][idx_x] = "."
 
         idx_x += 1
 
     return cnt
+
+
+def part2(inp) -> int:
+    total = 0
+
+    while True:
+        subcount = part1(inp, True)
+        total += subcount
+        if subcount == 0:
+            return total
 
 
 def main() -> None:
@@ -51,7 +63,8 @@ def main() -> None:
     d = transform_1d_to_2d(d)
     d = pad_2d_array(d, 1, "x")
 
-    print(f"Part 1: {part1(d)}")
+    # print(f"Part 1: {part1(d)}")
+    print(f"Part 2: {part2(d)}")
 
 
 if __name__ == "__main__":
