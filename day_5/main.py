@@ -32,9 +32,17 @@ def fresh_range(fresh) -> tuple:
     return merged
 
 
-def part1(fresh, available) -> int:
+def part2(fresh_map):
     cnt = 0
-    fresh_map = fresh_range(fresh)
+    for r in fresh_map:
+        cnt += r[1] - r[0] + 1
+
+    return cnt
+
+
+def part1(fresh_map, available) -> int:
+    cnt = 0
+
     for a in available:
         for r in fresh_map:
             if int(a) >= r[0] and int(a) <= r[1]:
@@ -51,7 +59,10 @@ def main() -> None:
         split_idx = data.index("")
         fresh_ids, available_ids = data[:split_idx], data[split_idx + 1 :]
 
-    print(f"Part 1: {part1(fresh_ids, available_ids)}")
+    fresh_map = fresh_range(fresh_ids)
+
+    print(f"Part 1: {part1(fresh_map, available_ids)}")
+    print(f"Part 2: {part2(fresh_map)}")
 
 
 if __name__ == "__main__":
